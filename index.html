@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Threejs</title>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+      
+      var cameraControl = new THREE.OrbitControls(camera);
+      // cameraControl.autoRotate = true;
+      var renderer = new THREE.WebGLRenderer({alpha: true});
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+      
+      var mesh;
+      //地球Map
+      var earthMap = new THREE.TextureLoader().load('image/earth.jpg');
+      earthMap.wrapS = earthMap.wrapT =  earthMap.RepeatWrapping;
+      earthMap.repeat.set( 1,1 );
+      //地球bumpMap
+      var earthBumpMap = new THREE.TextureLoader().load('image/earthbump.jpg');
+      earthBumpMap.wrapS = earthBumpMap.wrapT =  THREE.RepeatWrapping;
+      earthBumpMap.repeat.set( 1,1 );
+      //地球specularMap
+      var earthSpecularMap = new THREE.TextureLoader().load('image/earthspec.jpg');
+      earthSpecularMap.wrapS = earthSpecularMap.wrapT =  THREE.RepeatWrapping;
+      earthSpecularMap.repeat.set( 1,1 );
+      //cloudMap
+      var cloudMap = new THREE.TextureLoader().load('image/cloud.jpg');
+      cloudMap.wrapS = cloudMap.wrapT =  THREE.RepeatWrapping;
+      cloudMap.repeat.set( 1,1 );
+      //雲specularMap
+      var cloudSpecularMap = new THREE.TextureLoader().load('image/earthcloudmaptrans.jpg');
+      cloudSpecularMap.wrapS = cloudSpecularMap.wrapT =  THREE.RepeatWrapping;
+      cloudSpecularMap.repeat.set( 1,1 );
+      //月球Map
+      var moonMap = new THREE.TextureLoader().load('image/moon.jpg');
+      moonMap.wrapS = moonMap.wrapT =  moonMap.RepeatWrapping;
+      moonMap.repeat.set( 1,1 );
+      //月球bumpMap
+      var moonBumpMap = new THREE.TextureLoader().load('image/moonbump.jpg');
+      moonBumpMap.wrapS = moonBumpMap.wrapT =  THREE.RepeatWrapping;
+      moonBumpMap.repeat.set( 1,1 );
+    
+      
+      // textureLoader.crossOrigin = true;
+
+      //地球
+      var earthGeometry = new THREE.SphereGeometry(24, 60, 60);
+      var earthMaterial = new THREE.MeshPhongMaterial();
+      earthMaterial.map = earthMap;
+      earthMaterial.bumpMap = earthBumpMap;
+      earthMaterial.bumpScale = 1;
+      earthMaterial.specularMap = earthSpecularMap;
+      earthMaterial.specular = new THREE.Color('gray');
+      var earthMesh = new THREE.Mesh( earthGeometry, earthMaterial );
+      scene.add( earthMesh );
+
+
+      //雲
+      var cloudGeometry   = new THREE.SphereGeometry(24.2, 32, 32);
+      var cloudMaterial  = new THREE.MeshPhongMaterial({
+        map         : cloudMap,
+        side        : THREE.DoubleSide,
+        opacity     : 0.4,
+        transparent : true,
+        depthWrite  : false,
+        specularMap : cloudSpecularMap,
+        // specular : new THREE.Color('gray')
+      })
+      var cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial)
+      scene.add(cloudMesh);
+
+
+      //星空
+      var galaxyGeometry  = new THREE.SphereGeometry(300, 32, 32)
+
+      var galaxyMaterial = new THREE.MeshBasicMaterial()
+      galaxyMaterial.map = new THREE.TextureLoader().load('image/galaxy.png');
+      galaxyMaterial.map.wrapS = galaxyMaterial.map.wrapT =  THREE.RepeatWrapping;
+      galaxyMaterial.map.repeat.set(1,1);
+      galaxyMaterial.side  = THREE.BackSide
+      var galaxymesh  = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+      scene.add(galaxymesh);
+
+      //月球
+      var moonGeometry = new THREE.SphereGeometry(5, 60, 60);
+      var moonMaterial = new THREE.MeshPhongMaterial();
+      moonMaterial.map = moonMap;
+      moonMaterial.bumpMap = moonBumpMap;
+      moonMaterial.bumpScale = 0.1;
+      var moonMesh = new THREE.Mesh( moonGeometry, moonMaterial );
+      moonMesh.position.x = 75;
+      scene.add( moonMesh );
+
+      render();
+      camera.position.z = 100;
+      var light	= new THREE.AmbientLight( 0x888888 )
+      scene.add( light );
+      var light	= new THREE.DirectionalLight( 0xcccccc, 1 )
+      light.position.set(5,3,5)
+      scene.add( light )
+      
+
+
+      function render() {
+        requestAnimationFrame( render );
+        renderer.render(scene, camera);
+        cameraControl.update();
+        earthMesh.rotateY(0.001);
+        cloudMesh.rotateY(0.0025);
+        moonMesh.rotateY(0.001);
+      };    
+    </script>
+    
+</body>
+</html>
