@@ -36,7 +36,7 @@
       var earthSpecularMap = new THREE.TextureLoader().load('image/earthspec.jpg');
       earthSpecularMap.wrapS = earthSpecularMap.wrapT =  THREE.RepeatWrapping;
       earthSpecularMap.repeat.set( 1,1 );
-      //cloudMap
+      //雲Map
       var cloudMap = new THREE.TextureLoader().load('image/cloud.jpg');
       cloudMap.wrapS = cloudMap.wrapT =  THREE.RepeatWrapping;
       cloudMap.repeat.set( 1,1 );
@@ -65,7 +65,7 @@
       earthMaterial.specularMap = earthSpecularMap;
       earthMaterial.specular = new THREE.Color('gray');
       var earthMesh = new THREE.Mesh( earthGeometry, earthMaterial );
-      scene.add( earthMesh );
+      // scene.add( earthMesh );
 
 
       //雲
@@ -80,14 +80,14 @@
         // specular : new THREE.Color('gray')
       })
       var cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial)
-      scene.add(cloudMesh);
+      // scene.add(cloudMesh);
 
 
       //星空
-      var galaxyGeometry  = new THREE.SphereGeometry(300, 32, 32)
+      var galaxyGeometry  = new THREE.SphereGeometry(250, 32, 32)
 
       var galaxyMaterial = new THREE.MeshBasicMaterial()
-      galaxyMaterial.map = new THREE.TextureLoader().load('image/galaxy.png');
+      galaxyMaterial.map = new THREE.TextureLoader().load('image/360.jpg');
       galaxyMaterial.map.wrapS = galaxyMaterial.map.wrapT =  THREE.RepeatWrapping;
       galaxyMaterial.map.repeat.set(1,1);
       galaxyMaterial.side  = THREE.BackSide
@@ -102,7 +102,7 @@
       moonMaterial.bumpScale = 0.1;
       var moonMesh = new THREE.Mesh( moonGeometry, moonMaterial );
       moonMesh.position.x = 75;
-      scene.add( moonMesh );
+      // scene.add( moonMesh );
 
       render();
       camera.position.z = 100;

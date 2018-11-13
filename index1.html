@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/FBXLoader.js"></script>
+    <script src="js/ColladaLoader.js"></script>
+    <script>
+    var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+      
+      var cameraControl = new THREE.OrbitControls(camera);
+      // cameraControl.autoRotate = true;
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+      
+      // var pi;
+      // var pikachu = new THREE.ColladaLoader().load('Pikachu/PikachuM_ColladaMax.dae');
+
+      // console.log(pikachu);
+      var loader = new THREE.ColladaLoader();
+      loader.load("Eevee/Eevee_ColladaMax.dae", function (mesh) {
+          console.log(mesh);
+          scene.add(mesh.scene);
+          
+      });
+
+      var loader = new THREE.ColladaLoader();
+      loader.load("Pikachu/PikachuM_ColladaMax.dae", function (mesh) {
+          console.log(mesh);
+          mesh.scene.position.x += 2;
+          scene.add(mesh.scene);
+          
+      });
+
+      var loader = new THREE.ColladaLoader();
+      loader.load("Buizel/BuizelM_OpenCollada.dae", function (mesh) {
+          console.log(mesh);
+          mesh.scene.position.x -= 2;
+          scene.add(mesh.scene);
+          
+      });
+
+	    // scene.add();
+      
+      
+      render();
+      camera.position.z = 10;
+      var light	= new THREE.AmbientLight( 0x888888 )
+      scene.add( light );
+      var light	= new THREE.DirectionalLight( 0xcccccc, 0.5 )
+      light.position.set(5,3,5)
+      scene.add( light )
+      
+
+
+      function render() {
+        requestAnimationFrame( render );
+        renderer.render(scene, camera);
+        cameraControl.update();
+
+      };    
+      
+      
+      console.log(scene);
+      
+      
+      
+      </script>
+</body>
+</html>
