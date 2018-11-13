@@ -26,14 +26,14 @@
 
       // console.log(pikachu);
       var loader = new THREE.ColladaLoader();
-      loader.load("Eevee/Eevee_ColladaMax.dae", function (mesh) {
+      loader.load("Eevee/Eevee_ColladaMax.DAE", function (mesh) {
           console.log(mesh);
           scene.add(mesh.scene);
           
       });
 
       var loader = new THREE.ColladaLoader();
-      loader.load("Pikachu/PikachuM_ColladaMax.dae", function (mesh) {
+      loader.load("Pikachu/PikachuM_ColladaMax.DAE", function (mesh) {
           console.log(mesh);
           mesh.scene.position.x += 2;
           scene.add(mesh.scene);
@@ -41,7 +41,7 @@
       });
 
       var loader = new THREE.ColladaLoader();
-      loader.load("Buizel/BuizelM_OpenCollada.dae", function (mesh) {
+      loader.load("Buizel/BuizelM_OpenCollada.DAE", function (mesh) {
           console.log(mesh);
           mesh.scene.position.x -= 2;
           scene.add(mesh.scene);
