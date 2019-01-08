@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Threejs</title>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+      
+      var cameraControl = new THREE.OrbitControls(camera);
+      cameraControl.maxAzimuthAngle = -1.3;
+      cameraControl.minAzimuthAngle = -2.7;
+      cameraControl.maxPolarAngle = 1.9;
+      cameraControl.minPolarAngle = 1.3;
+      var renderer = new THREE.WebGLRenderer({alpha: true});
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );  
+
+      //星空
+      var galaxyGeometry  = new THREE.SphereGeometry(250, 32, 32)
+
+      var galaxyMaterial = new THREE.MeshBasicMaterial()
+      galaxyMaterial.map = new THREE.TextureLoader().load('image/3601.png');
+      galaxyMaterial.map.wrapS = galaxyMaterial.map.wrapT =  THREE.RepeatWrapping;
+      galaxyMaterial.map.repeat.set(1,1);
+      galaxyMaterial.side  = THREE.BackSide
+      var galaxymesh  = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+      scene.add(galaxymesh);
+
+      var axesHelper = new THREE.AxesHelper( 100 );
+      scene.add( axesHelper );
+
+      render();
+      camera.position.set(-1.25,0,-0.5);
+      var light	= new THREE.AmbientLight( 0x888888 )
+      scene.add( light );
+      var light	= new THREE.DirectionalLight( 0xcccccc, 1 )
+      light.position.set(5,3,5)
+      scene.add( light )
+      
+
+
+      function render() {
+        requestAnimationFrame( render );
+        renderer.render(scene, camera);
+        cameraControl.update();
+      };    
+    </script>
+    
+</body>
+</html>
